@@ -9,6 +9,11 @@ by offering a unified API and data structures for all datasets.
 ## Installation
 
 ```bash
+conda create -n code2graph python=3.9
+.....
+```
+
+```bash
 SRC_DIR=${PWD}/src
 mkdir -p ${SRC_DIR} && cd ${SRC_DIR}
 # For Cubert.
