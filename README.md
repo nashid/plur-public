@@ -24,6 +24,14 @@ python -m pip install -r requirements.txt
 python setup.py install
 ```
 
+code2graph (ours):
+```
+git remote add upstream https://github.com/nashid/plur
+
+git fetch --all
+git pull upstream code2graph-custom-dataset
+git push upstream code2graph-custom-dataset
+```
 **Test execution on small dataset**
 
 ```bash
