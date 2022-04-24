@@ -26,7 +26,8 @@ from plur.utils import util
 from plur.utils.graph_to_output_example import GraphToOutputExample
 from plur.utils.graph_to_output_example import GraphToOutputExampleNotValidError
 import tqdm
-
+import networkx as nx
+from networkx.drawing.nx_pydot import read_dot
 
 class Code2GraphDataset(PlurDataset):
   def __init__(self,
@@ -66,6 +67,34 @@ class Code2GraphDataset(PlurDataset):
     """Returns a beam.DoFn subclass that reads the raw data."""
     return None
 
+def parse_dot_file(file_name):
+    try:
+        rawGraph: Graph = nx.Graph(read_dot(file_name))
+        graph = to_pydot(rawGraph)
+
+        graph_to_output_example = GraphToOutputExample()
+
+        name_to_node_index = {}
+        index = 0
+        for node in graph.get_node_list():
+            #graph_to_output_example.add_node(node[0], node[1], node[2])
+            graph_to_output_example.add_node(node.get_label(), node.get_label(), node.get_label())
+
+            name_to_node_index[node.get_name()] = index
+            index = index + 1
+
+        edge_index = 0
+        for edge in graph.get_edge_list():
+            graph_to_output_example.add_edge(edge[0], edge[1], str(edge[2]))
+            graph_to_output_example.add_edge(name_to_node_index[edge.get_source()], name_to_node_index[edge.get_destination()], "some_label")
+            edge_index = edge_index + 1
+
+        print("processed file:{}".format(file_name))
+        return graph_to_output_example
+    except Exception as e:
+        print("file: {}, {}".format(file_name, e))
+
+
   def raw_data_to_graph_to_output_example(self, raw_data):
     """Convert raw data to the unified GraphToOutputExample data structure.
 
@@ -104,3 +133,4 @@ class Code2GraphDataset(PlurDataset):
     # output
     graph_to_output_example.add_token_output("return sum;")
     return {'split': split, 'GraphToOutputExample': graph_to_output_example}
+
