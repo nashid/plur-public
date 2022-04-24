@@ -91,6 +91,8 @@ class Code2GraphDataset(PlurDataset):
     """
     split = raw_data['split']
 
+    # TODO: first day, second day: just add one sample and run end to end
+    # TODO: resf of the week: add 5 samples and then run end to end
     graph_to_output_example = GraphToOutputExample()
 
     # add nodes
