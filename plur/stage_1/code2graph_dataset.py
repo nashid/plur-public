@@ -28,8 +28,19 @@ from plur.utils.graph_to_output_example import GraphToOutputExampleNotValidError
 import tqdm
 import networkx as nx
 from networkx.drawing.nx_pydot import read_dot
+from networkx.drawing.nx_pydot import to_pydot
 
 class Code2GraphDataset(PlurDataset):
+
+  _URLS = {}
+  _GIT_URL = {}
+  _DATASET_NAME = 'Code2Graph'
+  _DATASET_DESCRIPTION = """\
+  This dataset is used to train Code2Graph, which a learning based approach to
+  detect and fix bugs in Javascript programs. It contains bug fixes where the
+  bug are fixed with a single operation, the operation can be add_node,
+  del_node, replace_val, replace_type and NoOp.
+  """
   def __init__(self,
                stage_1_dir,
                configuration: Configuration = Configuration(),
@@ -61,39 +72,37 @@ class Code2GraphDataset(PlurDataset):
 
   def get_all_raw_data_paths(self):
     """Get paths to all raw data."""
-    return None
+    fileName = "dotFiles/code2Graph.dot"
+    return glob.glob(fileName)
+  def parse_dot_file(self, file_name):
+      try:
+          rawGraph: Graph = nx.Graph(read_dot(file_name))
+          graph = to_pydot(rawGraph)
+
+
+          graph_to_output_example = GraphToOutputExample()
+
+          name_to_node_index = {}
+          node_index = 0
+          for node in graph.get_node_list():
+              graph_to_output_example.add_node(node.obj_dict['sequence'], node.obj_dict['type'], node.obj_dict['name'])
+              name_to_node_index[node.get_name()] = node_index
+              node_index = node_index + 1
+
+          edge_index = 0
+          for edge in graph.get_edge_list():
+              graph_to_output_example.add_edge(edge.obj_dict['points'][0], edge.obj_dict['points'][1], str(edge.obj_dict['type']))
+              graph_to_output_example.add_edge(name_to_node_index[edge.get_source()], name_to_node_index[edge.get_destination()], "some_label")
+              edge_index = edge_index + 1
+
+          print("processed file:{}".format(file_name))
+          return graph_to_output_example
+      except Exception as e:
+          print("file: {}, {}".format(file_name, e))
 
   def raw_data_paths_to_raw_data_do_fn(self):
     """Returns a beam.DoFn subclass that reads the raw data."""
-    return None
-
-def parse_dot_file(file_name):
-    try:
-        rawGraph: Graph = nx.Graph(read_dot(file_name))
-        graph = to_pydot(rawGraph)
-
-        graph_to_output_example = GraphToOutputExample()
-
-        name_to_node_index = {}
-        index = 0
-        for node in graph.get_node_list():
-            #graph_to_output_example.add_node(node[0], node[1], node[2])
-            graph_to_output_example.add_node(node.get_label(), node.get_label(), node.get_label())
-
-            name_to_node_index[node.get_name()] = index
-            index = index + 1
-
-        edge_index = 0
-        for edge in graph.get_edge_list():
-            graph_to_output_example.add_edge(edge[0], edge[1], str(edge[2]))
-            graph_to_output_example.add_edge(name_to_node_index[edge.get_source()], name_to_node_index[edge.get_destination()], "some_label")
-            edge_index = edge_index + 1
-
-        print("processed file:{}".format(file_name))
-        return graph_to_output_example
-    except Exception as e:
-        print("file: {}, {}".format(file_name, e))
-
+    return self.parse_dot_file("dotFiles/code2Graph.dot")
 
   def raw_data_to_graph_to_output_example(self, raw_data):
     """Convert raw data to the unified GraphToOutputExample data structure.
@@ -122,13 +131,18 @@ def parse_dot_file(file_name):
 
     # TODO: first day, second day: just add one sample and run end to end
     # TODO: resf of the week: add 5 samples and then run end to end
-    graph_to_output_example = GraphToOutputExample()
+    fileName = "dotFiles/code2Graph.dot"
+    try:
+        graph_to_output_example = self.parse_dot_file(fileName)
+    except Exception as e:
+        print("file: {}, {}".format(fileName, e))
+
 
     # add nodes
-    graph_to_output_example.add_node(node[0], node[1], node[2])
+    #graph_to_output_example.add_node(node[0], node[1], node[2])
 
     # add edges
-    graph_to_output_example.add_edge(edge[0], edge[1], str(edge[2]))
+    #graph_to_output_example.add_edge(edge[0], edge[1], str(edge[2]))
 
     # output
     graph_to_output_example.add_token_output("return sum;")

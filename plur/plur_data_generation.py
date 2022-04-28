@@ -18,19 +18,22 @@ import functools
 from absl import app
 from absl import flags
 import immutabledict
+
+#from plur.stage_1.code2graph_dataset import Code2GraphDataset
+from plur.stage_1.code2graph_dataset import Code2GraphDataset
 from plur.stage_1.code2seq_dataset import Code2SeqDataset
 from plur.stage_1.convattn_dataset import ConvAttnDataset
-from plur.stage_1.cubert_exception_classification_dataset import CuBertExceptionClassificationDataset
-from plur.stage_1.cubert_function_docstring_classification_dataset import CuBertFunctionDocstringClassificationDataset
-from plur.stage_1.cubert_multitask_dataset import CuBertMultitaskDataset
-from plur.stage_1.cubert_multitask_rebalanced_dataset import CuBertMultitaskRebalancedDataset
-from plur.stage_1.cubert_swapped_operand_classification_dataset import CuBertSwappedOperandClassificationDataset
-from plur.stage_1.cubert_variable_misuse_classification_dataset import CuBertVariableMisuseClassificationDataset
-from plur.stage_1.cubert_variable_misuse_repair_dataset import CuBertVariableMisuseRepairDataset
-from plur.stage_1.cubert_variable_misuse_repair_nocopy_dataset import CuBertVariableMisuseRepairNoCopyDataset
-from plur.stage_1.cubert_variable_misuse_repair_unpointed_dataset import CuBertVariableMisuseRepairUnpointedDataset
-from plur.stage_1.cubert_variable_misuse_repair_unpointed_nocopy_dataset import CuBertVariableMisuseRepairUnpointedNoCopyDataset
-from plur.stage_1.cubert_wrong_operator_classification_dataset import CuBertWrongOperatorClassificationDataset
+# from plur.stage_1.cubert_exception_classification_dataset import CuBertExceptionClassificationDataset
+# from plur.stage_1.cubert_function_docstring_classification_dataset import CuBertFunctionDocstringClassificationDataset
+# from plur.stage_1.cubert_multitask_dataset import CuBertMultitaskDataset
+# from plur.stage_1.cubert_multitask_rebalanced_dataset import CuBertMultitaskRebalancedDataset
+# from plur.stage_1.cubert_swapped_operand_classification_dataset import CuBertSwappedOperandClassificationDataset
+# from plur.stage_1.cubert_variable_misuse_classification_dataset import CuBertVariableMisuseClassificationDataset
+# from plur.stage_1.cubert_variable_misuse_repair_dataset import CuBertVariableMisuseRepairDataset
+# from plur.stage_1.cubert_variable_misuse_repair_nocopy_dataset import CuBertVariableMisuseRepairNoCopyDataset
+# from plur.stage_1.cubert_variable_misuse_repair_unpointed_dataset import CuBertVariableMisuseRepairUnpointedDataset
+# from plur.stage_1.cubert_variable_misuse_repair_unpointed_nocopy_dataset import CuBertVariableMisuseRepairUnpointedNoCopyDataset
+# from plur.stage_1.cubert_wrong_operator_classification_dataset import CuBertWrongOperatorClassificationDataset
 from plur.stage_1.dummy_dataset import DummyDataset
 from plur.stage_1.funcom_dataset import FuncomDataset
 from plur.stage_1.great_var_misuse_dataset import GreatVarMisuseDataset
@@ -39,7 +42,7 @@ from plur.stage_1.manysstubs4j_dataset import ManySStuBs4JDataset
 from plur.stage_1.ogb_code_dataset import OgbCodeDataset
 from plur.stage_1.plur_dataset import Configuration
 from plur.stage_1.retrieve_and_edit_dataset import RetrieveAndEditDataset
-from plur.stage_2.cubert_multitask_graph_to_output_example_to_tfexample import CuBertMultitaskGraphToOutputExampleToTfexample
+# from plur.stage_2.cubert_multitask_graph_to_output_example_to_tfexample import CuBertMultitaskGraphToOutputExampleToTfexample
 from plur.stage_2.graph_to_output_example_to_tfexample import GraphToOutputExampleToTfexample
 from plur.stage_2.hoppity_graph_to_output_example_to_tfexample import HoppityGraphToOutputExampleToTfexample
 from plur.utils import constants
@@ -51,6 +54,7 @@ flags.DEFINE_enum(
     'dummy_dataset',
     (
         'code2seq_dataset',
+        'code2graph_dataset',
         'convattn_dataset',
         'dummy_dataset',
         'funcom_dataset',
@@ -113,6 +117,8 @@ def get_dataset_class(dataset_name):
   """Get the dataset class based on dataset_name."""
   if dataset_name == 'code2seq_dataset':
     return Code2SeqDataset
+  elif dataset_name == 'code2graph_dataset':
+      return Code2GraphDataset
   elif dataset_name == 'convattn_dataset':
     return ConvAttnDataset
   elif dataset_name == 'dummy_dataset':
@@ -127,28 +133,28 @@ def get_dataset_class(dataset_name):
     return ManySStuBs4JDataset
   elif dataset_name == 'ogb_code_dataset':
     return OgbCodeDataset
-  elif dataset_name == 'cubert_multitask_dataset':
-    return CuBertMultitaskDataset
-  elif dataset_name == 'cubert_multitask_rebalanced_dataset':
-    return CuBertMultitaskRebalancedDataset
-  elif dataset_name == 'cubert_exception_classification_dataset':
-    return CuBertExceptionClassificationDataset
-  elif dataset_name == 'cubert_variable_misuse_classification_dataset':
-    return CuBertVariableMisuseClassificationDataset
-  elif dataset_name == 'cubert_variable_misuse_repair_dataset':
-    return CuBertVariableMisuseRepairDataset
-  elif dataset_name == 'cubert_variable_misuse_repair_unpointed_dataset':
-    return CuBertVariableMisuseRepairUnpointedDataset
-  elif dataset_name == 'cubert_variable_misuse_repair_nocopy_dataset':
-    return CuBertVariableMisuseRepairNoCopyDataset
-  elif dataset_name == 'cubert_variable_misuse_repair_unpointed_nocopy_dataset':
-    return CuBertVariableMisuseRepairUnpointedNoCopyDataset
-  elif dataset_name == 'cubert_swapped_operand_classification_dataset':
-    return CuBertSwappedOperandClassificationDataset
-  elif dataset_name == 'cubert_function_docstring_classification_dataset':
-    return CuBertFunctionDocstringClassificationDataset
-  elif dataset_name == 'cubert_wrong_operator_classification_dataset':
-    return CuBertWrongOperatorClassificationDataset
+  # elif dataset_name == 'cubert_multitask_dataset':
+  #   return CuBertMultitaskDataset
+  # elif dataset_name == 'cubert_multitask_rebalanced_dataset':
+  #   return CuBertMultitaskRebalancedDataset
+  # elif dataset_name == 'cubert_exception_classification_dataset':
+  #   return CuBertExceptionClassificationDataset
+  # elif dataset_name == 'cubert_variable_misuse_classification_dataset':
+  #   return CuBertVariableMisuseClassificationDataset
+  # elif dataset_name == 'cubert_variable_misuse_repair_dataset':
+  #   return CuBertVariableMisuseRepairDataset
+  # elif dataset_name == 'cubert_variable_misuse_repair_unpointed_dataset':
+  #   return CuBertVariableMisuseRepairUnpointedDataset
+  # elif dataset_name == 'cubert_variable_misuse_repair_nocopy_dataset':
+  #   return CuBertVariableMisuseRepairNoCopyDataset
+  # elif dataset_name == 'cubert_variable_misuse_repair_unpointed_nocopy_dataset':
+  #   return CuBertVariableMisuseRepairUnpointedNoCopyDataset
+  # elif dataset_name == 'cubert_swapped_operand_classification_dataset':
+  #   return CuBertSwappedOperandClassificationDataset
+  # elif dataset_name == 'cubert_function_docstring_classification_dataset':
+  #   return CuBertFunctionDocstringClassificationDataset
+  # elif dataset_name == 'cubert_wrong_operator_classification_dataset':
+  #   return CuBertWrongOperatorClassificationDataset
   elif dataset_name == 'retrieve_and_edit_dataset':
     return RetrieveAndEditDataset
   else:
@@ -158,10 +164,10 @@ def get_dataset_class(dataset_name):
 def get_stage_2_class(dataset_name):
   if dataset_name == 'hoppity_single_ast_diff_dataset':
     return HoppityGraphToOutputExampleToTfexample
-  elif dataset_name == 'cubert_multitask_dataset':
-    return CuBertMultitaskGraphToOutputExampleToTfexample
-  elif dataset_name == 'cubert_multitask_rebalanced_dataset':
-    return CuBertMultitaskGraphToOutputExampleToTfexample
+  # elif dataset_name == 'cubert_multitask_dataset':
+  #   return CuBertMultitaskGraphToOutputExampleToTfexample
+  # elif dataset_name == 'cubert_multitask_rebalanced_dataset':
+  #   return CuBertMultitaskGraphToOutputExampleToTfexample
   else:
     return GraphToOutputExampleToTfexample
 
