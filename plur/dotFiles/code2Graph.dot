@@ -1,0 +1,118 @@
+digraph Myclass {
+	C [label="class Myclass"]
+
+	// ------ begin method Mymethod/0
+
+	M1 [label="M:Mymethod/0"];
+	C -> M1
+	M1 -> NT1 lineNumber=2
+	T1 [label="T:void (Id=1)",shape=box, color=blue];
+	T2 [label="T:Mymethod (Id=2)",shape=box, color=blue];
+	T3 [label="T:int (Id=3)",shape=box, color=blue];
+	T4 [label="T:time (Id=4)",shape=box, color=blue];
+	T5 [label="T:22 (Id=5)",shape=box, color=blue];
+	T6 [label="T:if (Id=6)",shape=box, color=blue];
+	T7 [label="T:time (Id=7)",shape=box, color=blue];
+	T8 [label="T:< (Id=8)",shape=box, color=blue];
+	T9 [label="T:10 (Id=9)",shape=box, color=blue];
+	T10 [label="T:time (Id=10)",shape=box, color=blue];
+	T11 [label="T:5 (Id=11)",shape=box, color=blue];
+	T12 [label="T:System (Id=12)",shape=box, color=blue];
+	T13 [label="T:out (Id=13)",shape=box, color=blue];
+	T14 [label="T:println (Id=14)",shape=box, color=blue];
+	T15 [label="T:Good morning. (Id=15)",shape=box, color=blue];
+	T16 [label="T:int (Id=16)",shape=box, color=blue];
+	T17 [label="T:a (Id=17)",shape=box, color=blue];
+	T18 [label="T:time (Id=18)",shape=box, color=blue];
+	T19 [label="T:+ (Id=19)",shape=box, color=blue];
+	T20 [label="T:1 (Id=20)",shape=box, color=blue];
+	T21 [label="T:time (Id=21)",shape=box, color=blue];
+	T22 [label="T:10 (Id=22)",shape=box, color=blue];
+	T23 [label="T:return (Id=23)",shape=box, color=blue];
+	T24 [label="T:0 (Id=24)",shape=box, color=blue];
+	S6 [label="S:a (Id=6)",shape=box,color=grey];
+	S5 [label="S:println (Id=5)",shape=box,color=grey];
+	S2 [label="S:time (Id=2)",shape=box,color=grey];
+	S3 [label="S:System (Id=3)",shape=box,color=grey];
+	S1 [label="S:Mymethod (Id=1)",shape=box,color=grey];
+	S4 [label="S:out (Id=4)",shape=box,color=grey];
+	V7 [label="V:a (Id=7)",color=green];
+	V5 [label="V:println (Id=5)",color=green];
+	V3 [label="V:system (Id=3)",color=green];
+	V1 [label="V:mymethod (Id=1)",color=green];
+	V2 [label="V:time (Id=2)",color=green];
+	V6 [label="V:good morning. (Id=6)",color=green];
+	V4 [label="V:out (Id=4)",color=green];
+	NT1 [label="NT:MethodDeclaration (lineNumber=2) (Id=1)"];
+	NT2 [label="NT:PrimitiveType (lineNumber=2) (Id=2)"];
+	NT3 [label="NT:Block (lineNumber=3) (Id=3)"];
+	NT4 [label="NT:VariableDeclarationStatement (lineNumber=4) (Id=4)"];
+	NT5 [label="NT:PrimitiveType (lineNumber=4) (Id=5)"];
+	NT6 [label="NT:VariableDeclarationFragment (lineNumber=4) (Id=6)"];
+	NT7 [label="NT:IfStatement (lineNumber=5) (Id=7)"];
+	NT8 [label="NT:InfixExpression (lineNumber=5) (Id=8)"];
+	NT9 [label="NT:Block (lineNumber=5) (Id=9)"];
+	NT10 [label="NT:ExpressionStatement (lineNumber=6) (Id=10)"];
+	NT11 [label="NT:Assignment (lineNumber=6) (Id=11)"];
+	NT12 [label="NT:ExpressionStatement (lineNumber=7) (Id=12)"];
+	NT13 [label="NT:MethodInvocation:println/0 (lineNumber=7) (Id=13)"];
+	NT14 [label="NT:QualifiedName (lineNumber=7) (Id=14)"];
+	NT15 [label="NT:VariableDeclarationStatement (lineNumber=9) (Id=15)"];
+	NT16 [label="NT:PrimitiveType (lineNumber=9) (Id=16)"];
+	NT17 [label="NT:VariableDeclarationFragment (lineNumber=9) (Id=17)"];
+	NT18 [label="NT:InfixExpression (lineNumber=9) (Id=18)"];
+	NT19 [label="NT:ExpressionStatement (lineNumber=10) (Id=19)"];
+	NT20 [label="NT:Assignment (lineNumber=10) (Id=20)"];
+	NT21 [label="NT:ReturnStatement (lineNumber=11) (Id=21)"];
+	NT1 -> T2 [color=red, label="child"];
+	NT2 -> T1 [color=red, label="child"];
+	NT5 -> T3 [color=red, label="child"];
+	NT6 -> T4 [color=red, label="child"];
+	NT6 -> T5 [color=red, label="child"];
+	NT7 -> T6 [color=red, label="child"];
+	NT8 -> T7 [color=red, label="child"];
+	NT8 -> T8 [color=red, label="child"];
+	NT8 -> T9 [color=red, label="child"];
+	NT11 -> T10 [color=red, label="child"];
+	NT11 -> T11 [color=red, label="child"];
+	NT13 -> T14 [color=red, label="child"];
+	NT13 -> T15 [color=red, label="child"];
+	NT14 -> T12 [color=red, label="child"];
+	NT14 -> T13 [color=red, label="child"];
+	NT16 -> T16 [color=red, label="child"];
+	NT17 -> T17 [color=red, label="child"];
+	NT18 -> T18 [color=red, label="child"];
+	NT18 -> T19 [color=red, label="child"];
+	NT18 -> T20 [color=red, label="child"];
+	NT20 -> T21 [color=red, label="child"];
+	NT20 -> T22 [color=red, label="child"];
+	NT21 -> T23 [color=red, label="child"];
+	NT21 -> T24 [color=red, label="child"];
+	NT1 -> NT2 [color=red, label="child"];
+	NT1 -> NT3 [color=red, label="child"];
+	NT3 -> NT4 [color=red, label="child"];
+	NT4 -> NT5 [color=red, label="child"];
+	NT4 -> NT6 [color=red, label="child"];
+	NT3 -> NT7 [color=red, label="child"];
+	NT7 -> NT8 [color=red, label="child"];
+	NT7 -> NT9 [color=red, label="child"];
+	NT9 -> NT10 [color=red, label="child"];
+	NT10 -> NT11 [color=red, label="child"];
+	NT9 -> NT12 [color=red, label="child"];
+	NT12 -> NT13 [color=red, label="child"];
+	NT13 -> NT14 [color=red, label="child"];
+	NT3 -> NT15 [color=red, label="child"];
+	NT15 -> NT16 [color=red, label="child"];
+	NT15 -> NT17 [color=red, label="child"];
+	NT17 -> NT18 [color=red, label="child"];
+	NT3 -> NT19 [color=red, label="child"];
+	NT19 -> NT20 [color=red, label="child"];
+	NT3 -> NT21 [color=red, label="child"];
+	NT7 -> NT10 [style = solid, color=orange, fontcolor = orange label="LASTMAYREAD (time)"];
+	NT7 -> NT19 [style = solid, color=orange, fontcolor = orange label="LASTMAYREAD (time)"];
+	NT4 -> NT7 [style = solid, color=green, fontcolor=green, label="LASTMAYWRITE (time)"];
+	NT4 -> NT15 [style = solid, color=green, fontcolor=green, label="LASTMAYWRITE (time)"];
+	NT10 -> NT15 [style = solid, color=green, fontcolor=green, label="LASTMAYWRITE (time)"];
+	// ------ end method Mymethod/0
+
+}
