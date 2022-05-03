@@ -20,7 +20,8 @@ from absl import flags
 import immutabledict
 
 #from plur.stage_1.code2graph_dataset import Code2GraphDataset
-from plur.stage_1.code2graph_dataset import Code2GraphDataset
+# from plur.stage_1.code2graph_dataset import Code2GraphDataset
+from plur.stage_1.code2graph_dataset_updated import Code2graphDatasetUpdated
 from plur.stage_1.code2seq_dataset import Code2SeqDataset
 from plur.stage_1.convattn_dataset import ConvAttnDataset
 # from plur.stage_1.cubert_exception_classification_dataset import CuBertExceptionClassificationDataset
@@ -118,7 +119,7 @@ def get_dataset_class(dataset_name):
   if dataset_name == 'code2seq_dataset':
     return Code2SeqDataset
   elif dataset_name == 'code2graph_dataset':
-      return Code2GraphDataset
+      return Code2graphDatasetUpdated
   elif dataset_name == 'convattn_dataset':
     return ConvAttnDataset
   elif dataset_name == 'dummy_dataset':

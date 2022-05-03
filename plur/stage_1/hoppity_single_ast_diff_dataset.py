@@ -295,10 +295,8 @@ class JsonExtractor(beam.DoFn):
 
   def process(self, file_path):
     """Function to read each json file.
-
     Args:
       file_path: Path to a raw data file.
-
     Yields:
       A dictionary with 'split', 'buggy_graph' and 'edit_operation' as keys.
       The value of the 'split' field is the split (train/valid/test) that the
