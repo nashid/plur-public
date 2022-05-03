@@ -112,14 +112,17 @@ class Code2graphDatasetUpdated(PlurDataset):
     # return RandomDataGenerator(self.num_random_graph,
     #                            super().get_random_split,
     #                            self._generate_random_graph_to_output_example)
-    with open(os.path.join(self.code2graph_dir,
-                           'code2Graph.dot')) as f:
-        train_data_filenames = set(f.read())
-    with open(os.path.join(self.code2graph_dir, 'code2Graph.dot')) as f:
-        validation_data_filenames = set(f.read())
-    with open(os.path.join(self.code2graph_dir,
-                           'code2Graph.dot')) as f:
-        testing_data_filenames = set(f.read())
+    # with open(os.path.join(self.code2graph_dir,
+    #                        'code2Graph.dot')) as f:
+    #     train_data_filenames = set(f.read())
+    # with open(os.path.join(self.code2graph_dir, 'code2Graph.dot')) as f:
+    #     validation_data_filenames = set(f.read())
+    # with open(os.path.join(self.code2graph_dir,
+    #                        'code2Graph.dot')) as f:
+    #     testing_data_filenames = set(f.read())
+    train_data_filenames = "dotFiles/code2Graph.dot"
+    validation_data_filenames = "dotFiles/code2Graph.dot"
+    testing_data_filenames =  "dotFiles/code2Graph.dot"
     return DotParser(super().get_random_split,
                      bool(self.user_defined_split_range),
                      train_data_filenames, validation_data_filenames,
