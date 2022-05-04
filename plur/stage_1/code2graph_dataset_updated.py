@@ -44,9 +44,16 @@ from networkx.drawing.nx_pydot import to_pydot
 
 class Code2graphDatasetUpdated(PlurDataset):
   """DummyDataset that contains random data, it is used for testing PlurDataset."""
-  _URLS = {}
+  _URLS = {
+              'code2graph.gz': {
+                  'url':
+                      'https://drive.google.com/uc?export=download&id=1VU0od7onIplHfZxrW7dxCNhkaokFnTsj',
+                  'sha1sum':
+                      'cdb09a72a5b50c0e8f9e80ffa672fd038f16988c',
+              }
+  }
   _GIT_URL = {}
-  _DATASET_NAME = 'dummy_dataset'
+  _DATASET_NAME = 'Code2Graph_dataset'
   _DATASET_DESCRIPTION = """\
   This dataset is only used for test the data generation process, all data are
   generated randomly.
@@ -65,9 +72,9 @@ class Code2graphDatasetUpdated(PlurDataset):
                max_node_per_graph=1000,
                deduplicate=False):
     self.code2graph_dir = None
-    # self.num_random_graph = num_random_graph
-    # self.min_node_per_graph = min_node_per_graph
-    # self.max_node_per_graph = max_node_per_graph
+    self.num_random_graph = num_random_graph
+    self.min_node_per_graph = min_node_per_graph
+    self.max_node_per_graph = max_node_per_graph
     super().__init__(self._DATASET_NAME, self._URLS, self._GIT_URL,
                      self._DATASET_DESCRIPTION, stage_1_dir,
                      transformation_funcs=transformation_funcs,
@@ -78,7 +85,7 @@ class Code2graphDatasetUpdated(PlurDataset):
 
   def download_dataset(self):
     """All data are generated on the fly, so we 'pass' here."""
-    #super().download_dataset_using_requests()
+    super().download_dataset_using_requests()
     # self.cooked_one_diff_extracted_dir = os.path.join(
     #     self.raw_data_dir, 'cooked-full-fmt-shift_node')
     # self.hoppity_cg_extracted_dir = os.path.join(self.raw_data_dir,
@@ -100,7 +107,6 @@ class Code2graphDatasetUpdated(PlurDataset):
     #             tf.extract(member, self.raw_data_dir)
     self.code2graph_dir = os.path.join(
         self.raw_data_dir, 'dotFiles')
-
 
   def get_all_raw_data_paths(self):
     """All data are generated on the fly, only return a dummy value."""
@@ -128,7 +134,6 @@ class Code2graphDatasetUpdated(PlurDataset):
                      train_data_filenames, validation_data_filenames,
                      testing_data_filenames,
                      self.code2graph_dir)
-
 
   def _generate_random_graph_to_output_example(self):
     """Generate a random GraphToOutputExample.
@@ -238,7 +243,7 @@ class DotParser(beam.DoFn):
       self.train_data_filenames = train_data_filenames
       self.validation_data_filenames = validation_data_filenames
       self.testing_data_filenames = testing_data_filenames
-      self.code2 = code2graph_dir
+      self.code2graph_dir = code2graph_dir
 
   # def process(self, _):
   #   for _ in range(self.num_random_graph):

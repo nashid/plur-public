@@ -330,7 +330,7 @@ class PlurDataset(abc.ABC):
         existing_test_graph_to_output_example)
     if existing_graph_to_output_example:
       regenerate_graph_to_output_example = input(
-          '{} already exists and contains json files, delete it and regenerate '
+          '{} already exists and contains json/dot files, delete it and regenerate '
           'GraphToOutputExample?(y/n): '.format(
               self.graph_to_output_example_dir))
       if regenerate_graph_to_output_example.lower() == 'y':
@@ -361,12 +361,9 @@ class PlurDataset(abc.ABC):
     # 'GraphToOutputExample' contains the GraphToOutputExample instance.
     graph_to_output_example_dicts = (
         raw_data_dicts
-        | 'Convert raw data to GraphToOutputExample' >> beam.Map(
-            self.raw_data_to_graph_to_output_example)
-        | 'Reshuffle after converting raw data to GraphToOutputExample' >>
-        beam.Reshuffle()
-        | 'Filter None GraphToOutputExample' >> beam.Filter(
-            util.graph_to_output_example_is_not_none)
+        | 'Convert raw data to GraphToOutputExample' >> beam.Map(self.raw_data_to_graph_to_output_example)
+        | 'Reshuffle after converting raw data to GraphToOutputExample' >> beam.Reshuffle()
+        | 'Filter None GraphToOutputExample' >> beam.Filter(util.graph_to_output_example_is_not_none)
     )
 
     if self.deduplicate:
