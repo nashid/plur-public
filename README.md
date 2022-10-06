@@ -15,6 +15,7 @@ mkdir -p ${SRC_DIR} && cd ${SRC_DIR}
 git clone https://github.com/google-research/google-research --depth=1
 export PYTHONPATH=${PYTHONPATH}:${SRC_DIR}/google-research
 git clone https://github.com/google-research/plur && cd plur
+pip install pyproject-toml
 python -m pip install -r requirements.txt
 python setup.py install
 ```
